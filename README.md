@@ -1,1 +1,1 @@
-# NFL-Stats-Sorter
+# NFL-QbStatsSorter
