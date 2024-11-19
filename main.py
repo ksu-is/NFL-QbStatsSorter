@@ -17,6 +17,12 @@ BLACK = (0, 0, 0)
 PADDLE_WIDTH, PADDLE_HEIGHT = 15, 100
 BALL_SIZE = 15
 
+# Paddle class
+class Paddle:
+    def __init__(self, x, y):
+        self.rect = pygame.Rect(x, y, PADDLE_WIDTH, PADDLE_HEIGHT)
+        self.speed = 7
+
 # Create simple game loop
 def game_loop():
     running = True
