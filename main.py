@@ -23,6 +23,22 @@ class Paddle:
         self.rect = pygame.Rect(x, y, PADDLE_WIDTH, PADDLE_HEIGHT)
         self.speed = 7
 
+def move(self, up=True):
+        keys = pygame.key.get_pressed()
+        if up:
+            if keys[pygame.K_w] and self.rect.top > 0:
+                self.rect.y -= self.speed
+            if keys[pygame.K_s] and self.rect.bottom < HEIGHT:
+                self.rect.y += self.speed
+        else:
+            if keys[pygame.K_UP] and self.rect.top > 0:
+                self.rect.y -= self.speed
+            if keys[pygame.K_DOWN] and self.rect.bottom < HEIGHT:
+                self.rect.y += self.speed
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, WHITE, self.rect)
+
 # Create simple game loop
 def game_loop():
     running = True
