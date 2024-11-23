@@ -66,14 +66,54 @@ class Ball:
 
 # Create simple game loop
 def game_loop():
+    clock = pygame.time.Clock()
+    paddle_left = Paddle(30, HEIGHT // 2 - PADDLE_HEIGHT // 2)
+    paddle_right = Paddle(WIDTH - 30 - PADDLE_WIDTH, HEIGHT // 2 - PADDLE_HEIGHT // 2)
+    ball = Ball()
+
+    left_score, right_score = 0, 0
+    font = pygame.font.Font(None, 36)
+
     running = True
     while running:
+        screen.fill(BLACK)
+
+        # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        screen.fill((0, 0, 0))  # Black background
-        pygame.display.flip()  # Refresh screen
+        # Move paddles and ball
+        paddle_left.move(up=True)
+        paddle_right.move(up=False)
+        ball.move()
+
+        # Collision with paddles
+        if ball.rect.colliderect(paddle_left.rect) or ball.rect.colliderect(paddle_right.rect):
+            ball.x_speed = -ball.x_speed
+
+        # Score update
+        if ball.rect.left <= 0:
+            right_score += 1
+            ball.reset()
+        if ball.rect.right >= WIDTH:
+            left_score += 1
+            ball.reset()
+
+        # Draw everything
+        paddle_left.draw(screen)
+        paddle_right.draw(screen)
+        ball.draw(screen)
+
+        # Draw the score
+        score_text = font.render(f'{left_score} - {right_score}', True, WHITE)
+        screen.blit(score_text, (WIDTH // 2 - score_text.get_width() // 2, 20))
+
+        # Refresh the screen
+        pygame.display.flip()
+
+        # Frame rate
+        clock.tick(60)
 
     pygame.quit()
 
