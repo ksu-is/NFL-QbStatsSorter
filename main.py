@@ -39,6 +39,31 @@ def move(self, up=True):
     def draw(self, surface):
         pygame.draw.rect(surface, WHITE, self.rect)
 
+# Ball class
+class Ball:
+    def __init__(self):
+        self.rect = pygame.Rect(WIDTH // 2 - BALL_SIZE // 2, HEIGHT // 2 - BALL_SIZE // 2, BALL_SIZE, BALL_SIZE)
+        self.x_speed = random.choice([5, -5])
+        self.y_speed = random.choice([5, -5])
+
+    def move(self):
+        self.rect.x += self.x_speed
+        self.rect.y += self.y_speed
+
+        if self.rect.top <= 0 or self.rect.bottom >= HEIGHT:
+            self.y_speed = -self.y_speed
+
+    def reset(self):
+        self.rect.center = (WIDTH // 2, HEIGHT // 2)
+        self.x_speed = random.choice([5, -5])
+        self.y_speed = random.choice([5, -5])
+
+    def draw(self, surface):
+        pygame.draw.ellipse(surface, WHITE, self.rect)
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, WHITE, self.rect)
+
 # Create simple game loop
 def game_loop():
     running = True
